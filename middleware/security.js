@@ -49,33 +49,27 @@ exports.preventParameterPollution = (req, res, next) => {
   next();
 };
 
-// CORS options - based on dealcouponz pattern to avoid CORS issues when client/admin are on different domains
+// CORS options - allow Netlify, Vercel, localhost, and env-configured origins
 exports.corsOptions = {
   origin: function (origin, callback) {
     // Allow requests with no origin (mobile apps, Postman, curl, same-origin)
     if (!origin) return callback(null, true);
 
-    // In development, allow all localhost and 127.0.0.1 on any port
+    // Development: allow localhost
     if (process.env.NODE_ENV !== 'production') {
-      if (origin.startsWith('http://localhost:') || origin.startsWith('http://127.0.0.1:')) {
-        return callback(null, true);
-      }
-      if (origin.startsWith('https://localhost:') || origin.startsWith('https://127.0.0.1:')) {
+      if (/^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin)) {
         return callback(null, true);
       }
     }
 
-    // Build allowed origins from env and common deployment URLs
+    // Build allowed list from env
     const allowedOrigins = [
       process.env.CLIENT_URL,
       process.env.ADMIN_URL,
-      process.env.API_URL,
-      'https://trendyshop-three.vercel.app',
-      'https://www.trendyshop-three.vercel.app',
     ].filter(Boolean);
 
-    // Allow Vercel (*.vercel.app) and Netlify (*.netlify.app) deployments
-    if (origin.endsWith('.vercel.app') || origin.endsWith('.netlify.app')) {
+    // Allow Netlify (*.netlify.app) and Vercel (*.vercel.app) - use includes for subdomains
+    if (origin.includes('netlify.app') || origin.includes('vercel.app')) {
       return callback(null, true);
     }
 
@@ -83,7 +77,11 @@ exports.corsOptions = {
       return callback(null, true);
     }
 
-    // Log blocked origin for debugging (helpful when adding new deployments)
+    // Production fallback: allow any HTTPS origin (relaxed for deployment flexibility)
+    if (process.env.NODE_ENV === 'production' && origin.startsWith('https://')) {
+      return callback(null, true);
+    }
+
     console.warn('CORS blocked origin:', origin);
     callback(new Error('Not allowed by CORS'));
   },
