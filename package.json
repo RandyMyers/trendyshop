@@ -1,0 +1,55 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "E-commerce server with CJ Dropshipping and Flutterwave integration",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js",
+    "seed:admin": "node scripts/seedAdmin.js",
+    "seed:payment-methods": "node scripts/seedPaymentMethods.js",
+    "seed:payment-methods": "node scripts/seedPaymentMethods.js",
+    "seed:categories": "node scripts/seedCategories.js",
+    "seed:blog": "node scripts/seedBlogPosts.js",
+    "seed:content": "node scripts/seedStoreContent.js",
+    "check:categories": "node scripts/checkCategories.js",
+    "migrate:categories": "node scripts/migrateCategoriesAndProducts.js",
+    "migrate:categories:apply": "node scripts/migrateCategoriesAndProducts.js --apply",
+    "generate:sitemap": "node scripts/generate-sitemap.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "e-commerce",
+    "dropshipping",
+    "payment"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@reduxjs/toolkit": "^2.11.2",
+    "@tanstack/react-query": "^5.90.12",
+    "axios": "^1.13.2",
+    "bcryptjs": "^2.4.3",
+    "cloudinary": "^1.41.3",
+    "compression": "^1.8.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.6.1",
+    "express": "^4.22.1",
+    "express-fileupload": "^1.5.2",
+    "express-rate-limit": "^6.11.2",
+    "express-validator": "^7.3.1",
+    "helmet": "^7.2.0",
+    "jsonwebtoken": "^9.0.3",
+    "lucide-react": "^0.562.0",
+    "mongoose": "^7.8.8",
+    "morgan": "^1.10.1",
+    "node-cron": "^3.0.3",
+    "react-redux": "^9.2.0",
+    "react-router-dom": "^7.11.0",
+    "styled-components": "^6.1.19",
+    "winston": "^3.19.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}
