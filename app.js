@@ -46,9 +46,11 @@ const cloudinaryConfig = require('./config/cloudinary');
 
 const app = express();
 
-// Set Cloudinary configuration
+// Set Cloudinary configuration (non-critical for API; may be missing in serverless)
 app.use((req, res, next) => {
-  cloudinary.config(cloudinaryConfig);
+  try {
+    if (cloudinaryConfig.cloud_name) cloudinary.config(cloudinaryConfig);
+  } catch (e) { /* ignore */ }
   next();
 });
 
@@ -64,8 +66,12 @@ if (!isServerless) {
   }
 }
 
-// Connect to MongoDB
-mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true })
+// Connect to MongoDB (required - set MONGO_URL in Vercel env vars)
+const mongoUrl = process.env.MONGO_URL;
+if (!mongoUrl) {
+  logger.error('MONGO_URL environment variable is not set - API will fail');
+}
+mongoose.connect(mongoUrl || 'mongodb://localhost:27017/fallback', { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
     logger.info('Connected to MongoDB');
     
