@@ -49,48 +49,58 @@ exports.preventParameterPollution = (req, res, next) => {
   next();
 };
 
-// CORS options
+// CORS options - based on dealcouponz pattern to avoid CORS issues when client/admin are on different domains
 exports.corsOptions = {
   origin: function (origin, callback) {
-    // Allow requests with no origin (like Postman, curl, or same-origin)
-    if (!origin) {
-      return callback(null, true);
-    }
-    
-    // In development or if NODE_ENV is not set, be more permissive - allow localhost on any port
-    const isDevelopment = !process.env.NODE_ENV || process.env.NODE_ENV === 'development';
-    
-    if (isDevelopment) {
-      // Allow localhost, 127.0.0.1, and [::1] on any port in development
-      // This regex matches: http://localhost, http://localhost:3000, http://localhost:3002, etc.
-      const localhostRegex = /^https?:\/\/(localhost|127\.0\.0\.1|\[::1\])(:\d+)?$/;
-      if (localhostRegex.test(origin)) {
+    // Allow requests with no origin (mobile apps, Postman, curl, same-origin)
+    if (!origin) return callback(null, true);
+
+    // In development, allow all localhost and 127.0.0.1 on any port
+    if (process.env.NODE_ENV !== 'production') {
+      if (origin.startsWith('http://localhost:') || origin.startsWith('http://127.0.0.1:')) {
         return callback(null, true);
       }
-      
-      // Also try a simpler check for localhost
-      if (origin.includes('localhost') || origin.includes('127.0.0.1') || origin.includes('[::1]')) {
+      if (origin.startsWith('https://localhost:') || origin.startsWith('https://127.0.0.1:')) {
         return callback(null, true);
       }
     }
-    
-    // Production: only allow specific origins
+
+    // Build allowed origins from env and common deployment URLs
     const allowedOrigins = [
       process.env.CLIENT_URL,
       process.env.ADMIN_URL,
-    ].filter(Boolean); // Remove undefined values
-    
-    if (allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      // Log the origin for debugging
-      console.log('CORS blocked origin:', origin);
-      callback(new Error('Not allowed by CORS'));
+      process.env.API_URL,
+      'https://trendyshop-three.vercel.app',
+      'https://www.trendyshop-three.vercel.app',
+    ].filter(Boolean);
+
+    // Allow Vercel (*.vercel.app) and Netlify (*.netlify.app) deployments
+    if (origin.endsWith('.vercel.app') || origin.endsWith('.netlify.app')) {
+      return callback(null, true);
     }
+
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+
+    // Log blocked origin for debugging (helpful when adding new deployments)
+    console.warn('CORS blocked origin:', origin);
+    callback(new Error('Not allowed by CORS'));
   },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'CJ-Access-Token', 'X-Store-Id'],
+  allowedHeaders: [
+    'Origin',
+    'X-Requested-With',
+    'Content-Type',
+    'Accept',
+    'Authorization',
+    'Cache-Control',
+    'Pragma',
+    'CJ-Access-Token',
+    'X-Store-Id',
+  ],
+  exposedHeaders: ['X-Total-Count', 'X-Page-Count'],
 };
 
 // Rate limiters
