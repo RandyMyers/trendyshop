@@ -73,14 +73,28 @@ storeSchema.index({ domains: 1, isActive: 1 });
 storeSchema.statics.getDefaultStore = async function () {
   let store = await this.findOne({ slug: 'default' });
   if (!store) {
+    const domains = ['localhost', '127.0.0.1', 'trendyshop-three.vercel.app'];
+    const vercelHost = process.env.VERCEL_URL && !process.env.VERCEL_URL.includes('.')
+      ? `${process.env.VERCEL_URL}.vercel.app`
+      : process.env.VERCEL_URL;
+    if (vercelHost && !domains.includes(vercelHost)) domains.push(vercelHost);
     store = await this.create({
       name: 'Default Store',
       slug: 'default',
-      domains: [],
+      domains,
       defaultCurrency: 'USD',
       defaultCountry: 'US',
       isActive: true,
     });
+  } else {
+    // Ensure Vercel domain is in store for host-based lookup (idempotent)
+    const vercelHost = process.env.VERCEL_URL
+      ? (process.env.VERCEL_URL.includes('.') ? process.env.VERCEL_URL : `${process.env.VERCEL_URL}.vercel.app`)
+      : 'trendyshop-three.vercel.app';
+    if (vercelHost && !store.domains.includes(vercelHost)) {
+      store.domains.push(vercelHost);
+      await store.save();
+    }
   }
   return store;
 };

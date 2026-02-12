@@ -38,6 +38,7 @@ const {
 
 // Import logging
 const { logger, requestLogger, errorLogger } = require('./utils/logger');
+const { waitForMongo } = require('./middleware/waitForMongo');
 
 // Cloudinary Configuration (kept for image uploads)
 const cloudinary = require('cloudinary').v2;
@@ -114,6 +115,9 @@ app.use('/api/v1', (req, res, next) => {
   req.apiVersion = 'v1';
   next();
 });
+
+// Wait for MongoDB before API routes (critical for serverless cold start)
+app.use('/api', waitForMongo);
 
 // Rate limiting for different endpoints
 app.use('/api/v1/auth', authRateLimit);

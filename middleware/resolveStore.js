@@ -74,14 +74,16 @@ function getStoreFilter(storeId, includeLegacy = true) {
  * Like resolveStore but never fails - on error, continues with req.store/req.storeId = null.
  * Use for public routes (e.g. categories) that must work even without a store.
  */
-async function optionalResolveStore(req, res, next) {
-  try {
-    await resolveStore(req, res, next);
-  } catch (error) {
-    req.store = null;
-    req.storeId = null;
+function optionalResolveStore(req, res, next) {
+  const wrappedNext = (err) => {
+    if (err) {
+      req.store = null;
+      req.storeId = null;
+      return next();
+    }
     next();
-  }
+  };
+  resolveStore(req, res, wrappedNext);
 }
 
 module.exports = { resolveStore, optionalResolveStore, getStoreFilter };
