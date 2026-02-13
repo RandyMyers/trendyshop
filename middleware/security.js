@@ -55,6 +55,11 @@ exports.corsOptions = {
     // Allow requests with no origin (mobile apps, Postman, curl, same-origin)
     if (!origin) return callback(null, true);
 
+    // Allow localhost:3000 and localhost:3001 for local admin (when client is hosted)
+    if (['http://localhost:3000', 'http://localhost:3001', 'https://localhost:3000', 'https://localhost:3001'].includes(origin)) {
+      return callback(null, true);
+    }
+
     // Development: allow localhost
     if (process.env.NODE_ENV !== 'production') {
       if (/^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin)) {
