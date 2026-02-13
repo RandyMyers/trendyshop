@@ -20,7 +20,7 @@ exports.getCjBalance = async (req, res) => {
     res.status(500).json({
       success: false,
       message: error.message || 'Failed to get CJ balance',
-      error: process.env.NODE_ENV === 'development' ? error.message : undefined,
+      error: error.message,
     });
   }
 };
@@ -84,7 +84,7 @@ exports.getDashboardStats = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Failed to get dashboard stats',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error',
+      error: error.message,
     });
   }
 };
@@ -143,7 +143,7 @@ exports.getDashboardTrends = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Failed to get dashboard trends',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error',
+      error: error.message,
     });
   }
 };

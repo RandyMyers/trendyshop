@@ -104,7 +104,7 @@ exports.getCustomers = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Failed to get customers',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error',
+      error: error.message,
     });
   }
 };
@@ -168,7 +168,7 @@ exports.getLtvDistribution = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Failed to get customer LTV distribution',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error',
+      error: error.message,
     });
   }
 };
@@ -252,7 +252,7 @@ exports.getCustomerDetail = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Failed to get customer',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error',
+      error: error.message,
     });
   }
 };
@@ -308,7 +308,7 @@ exports.getCustomerOrders = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Failed to get customer orders',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error',
+      error: error.message,
     });
   }
 };
@@ -335,7 +335,7 @@ exports.getOrdersByIp = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Failed to get orders by IP',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error',
+      error: error.message,
     });
   }
 };
@@ -391,7 +391,7 @@ exports.backfillCustomerStats = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Failed to backfill customer stats',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error',
+      error: error.message,
     });
   }
 };

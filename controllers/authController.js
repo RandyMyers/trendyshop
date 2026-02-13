@@ -62,7 +62,7 @@ exports.register = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Failed to register user',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error',
+      error: error.message,
     });
   }
 };
@@ -132,7 +132,7 @@ exports.login = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Failed to login',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error',
+      error: error.message,
     });
   }
 };
@@ -169,7 +169,7 @@ exports.getMe = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Failed to get user profile',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error',
+      error: error.message,
     });
   }
 };
@@ -219,7 +219,7 @@ exports.updateProfile = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Failed to update profile',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error',
+      error: error.message,
     });
   }
 };
@@ -278,7 +278,7 @@ exports.changePassword = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Failed to change password',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error',
+      error: error.message,
     });
   }
 };

@@ -39,7 +39,7 @@ exports.getAdminUsers = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Failed to get users',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error',
+      error: error.message,
     });
   }
 };

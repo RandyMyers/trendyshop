@@ -236,20 +236,23 @@ app.use('*', (req, res) => {
   });
 });
 
-// Global error handler
+// Global error handler - include actual error message for debugging
 app.use((err, req, res, next) => {
+  const status = err.status || 500;
+  const errorMessage = err.message || 'An unexpected error occurred';
+
   logger.error('Unhandled error', {
-    error: err.message,
+    error: errorMessage,
     stack: err.stack,
     url: req.url,
     method: req.method,
     ip: req.ip,
   });
 
-  res.status(err.status || 500).json({
-    error: 'Internal Server Error',
-    message: process.env.NODE_ENV === 'production' ? 'Something went wrong' : err.message,
-    ...(process.env.NODE_ENV !== 'production' && { stack: err.stack }),
+  res.status(status).json({
+    error: status >= 500 ? 'Internal Server Error' : (err.name || 'Error'),
+    message: errorMessage,
+    ...(process.env.NODE_ENV !== 'production' && err.stack && { stack: err.stack }),
     timestamp: new Date().toISOString(),
   });
 });

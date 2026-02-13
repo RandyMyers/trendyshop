@@ -28,7 +28,7 @@ exports.handleCjOrderStatus = async (req, res) => {
     res.status(200).json({
       success: false,
       message: 'Webhook received but processing failed',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error',
+      error: error.message,
     });
   }
 };
@@ -60,7 +60,7 @@ exports.handleCjInventory = async (req, res) => {
     res.status(200).json({
       success: false,
       message: 'Webhook received but processing failed',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error',
+      error: error.message,
     });
   }
 };
@@ -91,7 +91,7 @@ exports.handleCjProduct = async (req, res) => {
     res.status(200).json({
       success: false,
       message: 'Webhook received but processing failed',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error',
+      error: error.message,
     });
   }
 };
@@ -122,7 +122,7 @@ exports.handleCjLogistics = async (req, res) => {
     res.status(200).json({
       success: false,
       message: 'Webhook received but processing failed',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error',
+      error: error.message,
     });
   }
 };

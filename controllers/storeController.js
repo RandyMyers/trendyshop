@@ -30,7 +30,7 @@ exports.getStores = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Failed to get stores',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error',
+      error: error.message,
     });
   }
 };
@@ -55,7 +55,7 @@ exports.getStore = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Failed to get store',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error',
+      error: error.message,
     });
   }
 };
@@ -95,7 +95,7 @@ exports.createStore = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Failed to create store',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error',
+      error: error.message,
     });
   }
 };
@@ -139,7 +139,7 @@ exports.updateStore = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Failed to update store',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error',
+      error: error.message,
     });
   }
 };

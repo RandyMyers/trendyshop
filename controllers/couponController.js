@@ -16,7 +16,7 @@ exports.getAdminCoupons = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Failed to get coupons',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error',
+      error: error.message,
     });
   }
 };
@@ -52,7 +52,7 @@ exports.createCoupon = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Failed to create coupon',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error',
+      error: error.message,
     });
   }
 };
@@ -87,7 +87,7 @@ exports.updateCoupon = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Failed to update coupon',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error',
+      error: error.message,
     });
   }
 };
@@ -108,7 +108,7 @@ exports.deleteCoupon = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Failed to delete coupon',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error',
+      error: error.message,
     });
   }
 };
@@ -150,7 +150,7 @@ exports.validateCoupon = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Failed to validate coupon',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error',
+      error: error.message,
     });
   }
 };

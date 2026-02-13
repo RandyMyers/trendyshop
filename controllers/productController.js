@@ -355,7 +355,7 @@ exports.getProducts = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Failed to get products',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error',
+      error: error.message,
     });
   }
 };
@@ -460,7 +460,7 @@ exports.getFilterOptions = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Failed to get filter options',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error',
+      error: error.message,
     });
   }
 };
@@ -761,7 +761,7 @@ exports.getProduct = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Failed to get product',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error',
+      error: error.message,
     });
   }
 };
@@ -812,7 +812,7 @@ exports.getProductBySlug = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Failed to get product',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error',
+      error: error.message,
     });
   }
 };
@@ -834,7 +834,7 @@ exports.getCategories = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Failed to get categories',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error',
+      error: error.message,
     });
   }
 };
@@ -883,7 +883,7 @@ exports.getFreightOptions = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Failed to get freight options',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error',
+      error: error.message,
     });
   }
 };
@@ -953,7 +953,7 @@ exports.browseCJCatalog = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Failed to browse CJ catalog',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error',
+      error: error.message,
     });
   }
 };
@@ -1013,7 +1013,7 @@ exports.getCJProductDetails = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Failed to get product details',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error',
+      error: error.message,
     });
   }
 };
@@ -1458,7 +1458,7 @@ exports.addProductFromCJ = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Failed to add product to store',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error',
+      error: error.message,
     });
   }
 };
@@ -1503,7 +1503,7 @@ exports.updateProductPrice = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Failed to update product price',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error',
+      error: error.message,
     });
   }
 };
@@ -1543,7 +1543,7 @@ exports.syncProduct = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Failed to sync product',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error',
+      error: error.message,
     });
   }
 };
@@ -1583,7 +1583,7 @@ exports.updateProduct = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Failed to update product',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error',
+      error: error.message,
     });
   }
 };
@@ -1690,7 +1690,7 @@ exports.deleteProduct = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Failed to delete product',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error',
+      error: error.message,
     });
   }
 };
@@ -1723,7 +1723,7 @@ exports.getCjStock = async (req, res) => {
     res.status(500).json({
       success: false,
       message: error.message || 'Failed to get CJ stock',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error',
+      error: error.message,
     });
   }
 };

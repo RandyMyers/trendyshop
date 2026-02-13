@@ -20,7 +20,7 @@ exports.getActivePaymentMethods = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Failed to get payment methods',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error',
+      error: error.message,
     });
   }
 };
@@ -125,7 +125,7 @@ exports.createOrUpdatePaymentMethod = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Failed to save payment method',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error',
+      error: error.message,
     });
   }
 };
@@ -156,7 +156,7 @@ exports.getPaymentMethods = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Failed to get payment methods',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error',
+      error: error.message,
     });
   }
 };
@@ -188,7 +188,7 @@ exports.getPaymentMethod = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Failed to get payment method',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error',
+      error: error.message,
     });
   }
 };
@@ -231,7 +231,7 @@ exports.deletePaymentMethod = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Failed to delete payment method',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error',
+      error: error.message,
     });
   }
 };
@@ -270,7 +270,7 @@ exports.toggleActive = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Failed to toggle payment method status',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error',
+      error: error.message,
     });
   }
 };

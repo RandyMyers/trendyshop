@@ -57,7 +57,7 @@ exports.getTopProducts = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Failed to get top products',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error',
+      error: error.message,
     });
   }
 };
@@ -100,7 +100,7 @@ exports.getRevenueByCountry = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Failed to get revenue by country',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error',
+      error: error.message,
     });
   }
 };
@@ -149,7 +149,7 @@ exports.getRevenueByPaymentMethod = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Failed to get revenue by payment method',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error',
+      error: error.message,
     });
   }
 };
@@ -212,7 +212,7 @@ exports.getAnalyticsByStore = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Failed to get analytics by store',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error',
+      error: error.message,
     });
   }
 };

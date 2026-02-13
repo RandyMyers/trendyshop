@@ -112,7 +112,7 @@ exports.initializeFlutterwavePayment = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Failed to initialize payment',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error',
+      error: error.message,
     });
   }
 };
@@ -188,7 +188,7 @@ exports.verifyFlutterwavePayment = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Failed to verify payment',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error',
+      error: error.message,
     });
   }
 };
@@ -259,6 +259,7 @@ exports.flutterwaveCallback = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Failed to process callback',
+      error: error.message,
     });
   }
 };
@@ -292,7 +293,7 @@ exports.getPayment = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Failed to get payment',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error',
+      error: error.message,
     });
   }
 };
@@ -332,7 +333,7 @@ exports.getPayments = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Failed to get payments',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error',
+      error: error.message,
     });
   }
 };
@@ -378,7 +379,7 @@ exports.getAdminPayments = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Failed to get payments',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error',
+      error: error.message,
     });
   }
 };
@@ -468,7 +469,7 @@ exports.initializeSquadPayment = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Failed to initialize payment',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error',
+      error: error.message,
     });
   }
 };
@@ -534,7 +535,7 @@ exports.verifySquadPayment = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Failed to verify payment',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error',
+      error: error.message,
     });
   }
 };
@@ -610,7 +611,7 @@ exports.getBankTransferDetails = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Failed to get bank transfer details',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error',
+      error: error.message,
     });
   }
 };
@@ -695,7 +696,7 @@ exports.uploadBankTransferReceipt = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Failed to upload receipt',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error',
+      error: error.message,
     });
   }
 };

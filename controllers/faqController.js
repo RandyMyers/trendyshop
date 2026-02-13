@@ -25,7 +25,7 @@ exports.getAdminFaqs = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Failed to get FAQs',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error',
+      error: error.message,
     });
   }
 };
@@ -64,7 +64,7 @@ exports.createFaq = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Failed to create FAQ',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error',
+      error: error.message,
     });
   }
 };
@@ -105,7 +105,7 @@ exports.updateFaq = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Failed to update FAQ',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error',
+      error: error.message,
     });
   }
 };
@@ -136,7 +136,7 @@ exports.deleteFaq = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Failed to delete FAQ',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error',
+      error: error.message,
     });
   }
 };
@@ -163,7 +163,7 @@ exports.getPublicFaqs = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Failed to get FAQs',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error',
+      error: error.message,
     });
   }
 };

@@ -48,7 +48,7 @@ exports.getTokenStatus = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Failed to get token status',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error',
+      error: error.message,
     });
   }
 };
@@ -79,7 +79,7 @@ exports.getConfig = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Failed to get configuration',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error',
+      error: error.message,
     });
   }
 };
@@ -159,7 +159,7 @@ exports.updateApiKey = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Failed to update API key',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error',
+      error: error.message,
     });
   }
 };
@@ -186,6 +186,7 @@ exports.refreshToken = async (req, res) => {
       return res.status(500).json({
         success: false,
         message: 'Failed to refresh token',
+        error: 'Token refresh returned no access token',
       });
     }
 
@@ -206,7 +207,7 @@ exports.refreshToken = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Failed to refresh token',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error',
+      error: error.message,
     });
   }
 };
@@ -273,9 +274,7 @@ exports.testConnection = async (req, res) => {
       res.status(500).json({
         success: false,
         message: 'Failed to connect to CJ Dropshipping API',
-        error: process.env.NODE_ENV === 'development' 
-          ? tokenError.message 
-          : 'Unable to authenticate with CJ API. Please verify your API key is correct.',
+        error: tokenError.message || 'Unable to authenticate with CJ API. Please verify your API key is correct.',
       });
     }
   } catch (error) {
@@ -286,7 +285,7 @@ exports.testConnection = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Connection test failed',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error',
+      error: error.message,
     });
   }
 };
@@ -313,7 +312,7 @@ exports.deleteToken = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Failed to delete token',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error',
+      error: error.message,
     });
   }
 };
@@ -334,7 +333,7 @@ exports.getWebhookConfig = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Failed to get webhook configuration',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error',
+      error: error.message,
     });
   }
 };
@@ -416,7 +415,7 @@ exports.setWebhookConfig = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Failed to set webhook configuration',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error',
+      error: error.message,
     });
   }
 };
@@ -437,7 +436,7 @@ exports.getWarehouses = async (req, res) => {
     res.status(500).json({
       success: false,
       message: error.message || 'Failed to get warehouse list',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error',
+      error: error.message,
     });
   }
 };
@@ -455,7 +454,7 @@ exports.getWarehouseDetail = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Failed to fetch CJ warehouse detail',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error',
+      error: error.message,
     });
   }
 };

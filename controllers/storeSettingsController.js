@@ -52,7 +52,7 @@ exports.getPublicSettings = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Failed to fetch store settings',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error',
+      error: error.message,
     });
   }
 };

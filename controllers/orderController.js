@@ -135,7 +135,7 @@ exports.createOrder = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Failed to create order',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error',
+      error: error.message,
     });
   }
 };
@@ -181,7 +181,7 @@ exports.getOrders = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Failed to get orders',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error',
+      error: error.message,
     });
   }
 };
@@ -215,7 +215,7 @@ exports.getOrder = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Failed to get order',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error',
+      error: error.message,
     });
   }
 };
@@ -298,7 +298,7 @@ exports.createCjOrder = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Failed to create CJ order',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error',
+      error: error.message,
     });
   }
 };
@@ -342,7 +342,7 @@ exports.syncOrderStatus = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Failed to sync order status',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error',
+      error: error.message,
     });
   }
 };
@@ -399,7 +399,7 @@ exports.cancelOrder = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Failed to cancel order',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error',
+      error: error.message,
     });
   }
 };
@@ -476,7 +476,7 @@ exports.getAdminOrders = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Failed to get orders',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error',
+      error: error.message,
     });
   }
 };
@@ -510,7 +510,7 @@ exports.getAdminOrder = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Failed to get order',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error',
+      error: error.message,
     });
   }
 };
@@ -555,7 +555,7 @@ exports.markOrderAsPaid = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Failed to mark order as paid',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error',
+      error: error.message,
     });
   }
 };

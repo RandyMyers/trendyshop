@@ -74,7 +74,7 @@ exports.getCategories = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Failed to get categories',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error',
+      error: error.message,
     });
   }
 };
@@ -103,7 +103,7 @@ exports.getCategory = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Failed to get category',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error',
+      error: error.message,
     });
   }
 };
@@ -194,7 +194,7 @@ exports.createCategory = async (req, res) => {
         return res.status(500).json({
           success: false,
           message: 'Failed to upload image',
-          error: process.env.NODE_ENV === 'development' ? uploadError.message : 'Image upload failed',
+          error: uploadError.message,
         });
       }
     }
@@ -260,7 +260,7 @@ exports.createCategory = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Failed to create category',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error',
+      error: error.message,
     });
   }
 };
@@ -335,7 +335,7 @@ exports.updateCategory = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Failed to update category',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error',
+      error: error.message,
     });
   }
 };
@@ -386,7 +386,7 @@ exports.deleteCategory = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Failed to delete category',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error',
+      error: error.message,
     });
   }
 };
@@ -469,6 +469,7 @@ exports.updateCategoryTranslation = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Failed to update category translation',
+      error: error.message,
     });
   }
 };
@@ -584,7 +585,7 @@ exports.getPublicCategory = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Failed to get category',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error',
+      error: error.message,
     });
   }
 };
@@ -657,7 +658,7 @@ exports.getPublicCategories = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Failed to get categories',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error',
+      error: error.message,
     });
   }
 };
