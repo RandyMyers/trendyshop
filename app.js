@@ -13,6 +13,14 @@ const fileUpload = require('express-fileupload');
 // Load environment variables
 dotenv.config();
 
+// Validate required env vars early (fail-fast like blogify - prevents 500s from missing MONGO_URL)
+const { validateEnv } = require('./utils/envValidator');
+const env = validateEnv({
+  required: ['MONGO_URL', 'JWT_SECRET'],
+  optional: ['NODE_ENV', 'PORT', 'CLIENT_URL', 'ADMIN_URL', 'CLOUDINARY_NAME', 'CLOUDINARY_API_KEY', 'CLOUDINARY_SECRET'],
+  defaults: { NODE_ENV: 'development', PORT: 5000 },
+});
+
 // Check if we're in a serverless environment
 const isServerless = !!(
   process.env.VERCEL || 
@@ -66,12 +74,17 @@ if (!isServerless) {
   }
 }
 
-// Connect to MongoDB (required - set MONGO_URL in Vercel env vars)
-const mongoUrl = process.env.MONGO_URL;
-if (!mongoUrl) {
-  logger.error('MONGO_URL environment variable is not set - API will fail');
-}
-mongoose.connect(mongoUrl || 'mongodb://localhost:27017/fallback', { useNewUrlParser: true, useUnifiedTopology: true })
+// Connect to MongoDB (blogify-style options for serverless reliability)
+const mongoOptions = {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  maxPoolSize: 10,
+  minPoolSize: 2,
+  serverSelectionTimeoutMS: 5000,
+  socketTimeoutMS: 45000,
+  family: 4, // Prefer IPv4 (avoids IPv6 issues on some hosts)
+};
+mongoose.connect(env.MONGO_URL, mongoOptions)
   .then(() => {
     logger.info('Connected to MongoDB');
     
@@ -88,6 +101,31 @@ mongoose.connect(mongoUrl || 'mongodb://localhost:27017/fallback', { useNewUrlPa
 // Trust proxy (for accurate IP addresses behind reverse proxy)
 app.set('trust proxy', 1);
 
+// --- CORS (Vercel-safe, like blogify) ---
+// Set CORS headers early so they apply to ALL responses including errors. Handle OPTIONS preflight.
+const isDev = env.NODE_ENV !== 'production';
+const isAllowedOrigin = (origin) => {
+  if (!origin) return isDev;
+  if (isDev && (origin.startsWith('http://localhost:') || origin.startsWith('http://127.0.0.1:'))) return true;
+  if (origin === env.CLIENT_URL || origin === env.ADMIN_URL) return true;
+  if (origin.endsWith('.netlify.app') || origin.endsWith('.vercel.app')) return true;
+  if (process.env.NODE_ENV === 'production' && origin.startsWith('https://')) return true;
+  return false;
+};
+app.use((req, res, next) => {
+  const origin = req.headers.origin;
+  if (isAllowedOrigin(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+    res.setHeader('Vary', 'Origin');
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
+  }
+  res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PUT,PATCH,DELETE,OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization, Cache-Control, Pragma, CJ-Access-Token, X-Store-Id');
+  res.setHeader('Access-Control-Max-Age', '86400');
+  if (req.method === 'OPTIONS') return res.status(204).end();
+  next();
+});
+
 // Security middleware (order matters!)
 app.use(securityHeaders);
 app.use(compressResponse);
@@ -95,7 +133,7 @@ app.use(requestSizeLimit);
 app.use(sanitizeData);
 app.use(preventParameterPollution);
 
-// CORS configuration
+// CORS package as backup (manual CORS above handles OPTIONS and base headers)
 app.use(cors(corsOptions));
 
 // Body parsing middleware
