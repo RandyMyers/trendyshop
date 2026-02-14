@@ -2,7 +2,6 @@ const express = require('express');
 const http = require('http');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
-const cors = require('cors');
 const bodyParser = require('body-parser');
 const path = require('path');
 const dotenv = require('dotenv');
@@ -40,7 +39,6 @@ const {
   sanitizeData, 
   preventParameterPollution, 
   compressResponse, 
-  corsOptions, 
   requestSizeLimit
 } = require('./middleware/security');
 
@@ -102,12 +100,17 @@ mongoose.connect(env.MONGO_URL, mongoOptions)
 // Trust proxy (for accurate IP addresses behind reverse proxy)
 app.set('trust proxy', 1);
 
-// --- CORS (Vercel-safe, like blogify) ---
-// Set CORS headers early so they apply to ALL responses including errors. Handle OPTIONS preflight.
+// Security middleware (order matters!)
+app.use(securityHeaders);
+app.use(compressResponse);
+app.use(requestSizeLimit);
+app.use(sanitizeData);
+app.use(preventParameterPollution);
+
+// CORS: single implementation so localhost:3000 and 3001 always get correct origin (including OPTIONS preflight)
 const isDev = env.NODE_ENV !== 'production';
 const isAllowedOrigin = (origin) => {
   if (!origin) return isDev;
-  // Allow localhost:3000 and localhost:3001 (client + admin) in all environments for local dev against prod API
   if (['http://localhost:3000', 'http://localhost:3001', 'https://localhost:3000', 'https://localhost:3001'].includes(origin)) return true;
   if (isDev && (origin.startsWith('http://localhost:') || origin.startsWith('http://127.0.0.1:'))) return true;
   if (origin === env.CLIENT_URL || origin === env.ADMIN_URL) return true;
@@ -117,27 +120,21 @@ const isAllowedOrigin = (origin) => {
 };
 app.use((req, res, next) => {
   const origin = req.headers.origin;
-  if (isAllowedOrigin(origin)) {
+  if (origin && isAllowedOrigin(origin)) {
     res.setHeader('Access-Control-Allow-Origin', origin);
-    res.setHeader('Vary', 'Origin');
     res.setHeader('Access-Control-Allow-Credentials', 'true');
   }
+  res.setHeader('Vary', 'Origin');
   res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PUT,PATCH,DELETE,OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization, Cache-Control, Pragma, CJ-Access-Token, X-Store-Id');
   res.setHeader('Access-Control-Max-Age', '86400');
+  // Prevent caching: responses include origin-specific CORS header; 304 would reuse wrong origin
+  res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+  res.setHeader('Pragma', 'no-cache');
+  res.setHeader('CDN-Cache-Control', 'no-store');
   if (req.method === 'OPTIONS') return res.status(204).end();
   next();
 });
-
-// Security middleware (order matters!)
-app.use(securityHeaders);
-app.use(compressResponse);
-app.use(requestSizeLimit);
-app.use(sanitizeData);
-app.use(preventParameterPollution);
-
-// CORS package as backup (manual CORS above handles OPTIONS and base headers)
-app.use(cors(corsOptions));
 
 // Body parsing middleware
 app.use(bodyParser.json({ limit: '10mb' }));
