@@ -266,7 +266,7 @@ exports.createCategory = async (req, res) => {
 };
 
 /**
- * Update category
+ * Update category (supports multipart: req.files.image for Cloudinary upload)
  */
 exports.updateCategory = async (req, res) => {
   try {
@@ -274,6 +274,44 @@ exports.updateCategory = async (req, res) => {
     const updateData = { ...req.body };
     if (updateData.niche !== undefined) {
       updateData.niche = updateData.niche ? String(updateData.niche).toLowerCase().trim() : null;
+    }
+
+    // Handle image upload if file is provided (same as createCategory)
+    if (req.files && req.files.image) {
+      try {
+        const file = req.files.image;
+        const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
+        if (!allowedTypes.includes(file.mimetype)) {
+          return res.status(400).json({
+            success: false,
+            message: 'Invalid file type. Only JPEG, PNG, GIF, and WebP images are allowed.',
+          });
+        }
+        const maxSize = 5 * 1024 * 1024;
+        if (file.size > maxSize) {
+          return res.status(400).json({
+            success: false,
+            message: 'File size too large. Maximum size is 5MB.',
+          });
+        }
+        const uploadResult = await cloudinary.uploader.upload(file.tempFilePath, {
+          folder: 'categories',
+          resource_type: 'image',
+          transformation: [
+            { width: 800, height: 800, crop: 'limit' },
+            { quality: 'auto' },
+          ],
+        });
+        updateData.image = uploadResult.secure_url;
+        logger.info('Category image updated via Cloudinary', { categoryId: id });
+      } catch (uploadError) {
+        logger.error('Error uploading category image', { error: uploadError.message, categoryId: id });
+        return res.status(500).json({
+          success: false,
+          message: 'Failed to upload image',
+          error: uploadError.message,
+        });
+      }
     }
 
     // Prevent setting parent to itself

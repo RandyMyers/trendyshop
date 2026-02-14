@@ -107,6 +107,8 @@ app.set('trust proxy', 1);
 const isDev = env.NODE_ENV !== 'production';
 const isAllowedOrigin = (origin) => {
   if (!origin) return isDev;
+  // Allow localhost:3000 and localhost:3001 (client + admin) in all environments for local dev against prod API
+  if (['http://localhost:3000', 'http://localhost:3001', 'https://localhost:3000', 'https://localhost:3001'].includes(origin)) return true;
   if (isDev && (origin.startsWith('http://localhost:') || origin.startsWith('http://127.0.0.1:'))) return true;
   if (origin === env.CLIENT_URL || origin === env.ADMIN_URL) return true;
   if (origin.endsWith('.netlify.app') || origin.endsWith('.vercel.app')) return true;
