@@ -2,12 +2,13 @@ const express = require('express');
 const router = express.Router();
 const { body } = require('express-validator');
 const cjConfigController = require('../controllers/cjConfigController');
-const { authenticate, isAdmin } = require('../middleware/auth');
+const { authenticate, hasAdminAccess } = require('../middleware/auth');
+const { requirePermission } = require('../middleware/permissions');
 const { validate } = require('../middleware/validation');
 
-// All routes require admin authentication
 router.use(authenticate);
-router.use(isAdmin);
+router.use(hasAdminAccess);
+router.use(requirePermission('cj_config'));
 
 // CJ Configuration Routes
 router.get('/token-status', cjConfigController.getTokenStatus);

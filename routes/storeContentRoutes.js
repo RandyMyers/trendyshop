@@ -1,11 +1,12 @@
 const express = require('express');
 const router = express.Router({ mergeParams: true }); // To access :storeId from parent route
 const storeContentController = require('../controllers/storeContentController');
-const { authenticate, isAdmin } = require('../middleware/auth');
+const { authenticate, hasAdminAccess } = require('../middleware/auth');
+const { requirePermission } = require('../middleware/permissions');
 
-// All admin routes require authentication
 router.use(authenticate);
-router.use(isAdmin);
+router.use(hasAdminAccess);
+router.use(requirePermission('store_content'));
 
 // Admin routes (nested under /admin/stores/:storeId/content)
 router.get('/', storeContentController.getAllContent);

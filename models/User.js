@@ -33,9 +33,17 @@ const userSchema = new mongoose.Schema(
     },
     role: {
       type: String,
-      enum: ['customer', 'admin'],
+      enum: ['customer', 'admin', 'member'],
       default: 'customer',
     },
+    /** Permission keys for role 'member' (invited users). Ignored when role is 'admin'. */
+    permissions: {
+      type: [String],
+      default: [],
+    },
+    /** Audit: who invited this user (for members) */
+    invitedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    invitedAt: { type: Date },
     isEmailVerified: {
       type: Boolean,
       default: false,

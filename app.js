@@ -80,7 +80,8 @@ const mongoOptions = {
   useUnifiedTopology: true,
   maxPoolSize: 10,
   minPoolSize: 2,
-  serverSelectionTimeoutMS: 5000,
+  serverSelectionTimeoutMS: 30000,
+  connectTimeoutMS: 20000,
   socketTimeoutMS: 45000,
   family: 4, // Prefer IPv4 (avoids IPv6 issues on some hosts)
 };

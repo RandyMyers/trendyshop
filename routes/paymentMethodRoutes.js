@@ -1,15 +1,16 @@
 const express = require('express');
 const router = express.Router();
 const paymentMethodController = require('../controllers/paymentMethodController');
-const { authenticate, isAdmin } = require('../middleware/auth');
+const { authenticate, hasAdminAccess } = require('../middleware/auth');
+const { requirePermission } = require('../middleware/permissions');
 const { resolveStore } = require('../middleware/resolveStore');
 
-// Public: active payment methods for storefront (no auth)
 router.get('/active', resolveStore, paymentMethodController.getActivePaymentMethods);
 
-// Admin routes
 router.use(authenticate);
-router.use(isAdmin);
+router.use(hasAdminAccess);
+router.use(requirePermission('payment_methods'));
+router.use(resolveStore);
 router.get('/', paymentMethodController.getPaymentMethods);
 router.get('/:id', paymentMethodController.getPaymentMethod);
 router.post('/', paymentMethodController.createOrUpdatePaymentMethod);

@@ -1,11 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const faqController = require('../controllers/faqController');
-const { authenticate, isAdmin } = require('../middleware/auth');
+const { authenticate, hasAdminAccess } = require('../middleware/auth');
+const { requirePermission } = require('../middleware/permissions');
 const { resolveStore } = require('../middleware/resolveStore');
 
 router.use(authenticate);
-router.use(isAdmin);
+router.use(hasAdminAccess);
+router.use(requirePermission('faq'));
 router.use(resolveStore);
 
 router.get('/', faqController.getAdminFaqs);

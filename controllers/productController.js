@@ -539,8 +539,8 @@ exports.getProduct = async (req, res) => {
       });
     }
 
-    // Check if request is from admin (authenticated admin user)
-    const isAdminRequest = req.user && req.user.role === 'admin';
+    // Check if request is from admin panel (admin or invited member)
+    const isAdminRequest = req.user && (req.user.role === 'admin' || req.user.role === 'member');
     
     // Ensure product is active and visible for public access (unless admin)
     if (!isAdminRequest && (!product.isInStore || product.status !== 'active' || product.visibility !== 'public')) {

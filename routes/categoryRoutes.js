@@ -1,12 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const categoryController = require('../controllers/categoryController');
-const { authenticate, isAdmin } = require('../middleware/auth');
+const { authenticate, hasAdminAccess } = require('../middleware/auth');
+const { requirePermission } = require('../middleware/permissions');
 const { resolveStore } = require('../middleware/resolveStore');
 
-// All category routes require admin authentication
 router.use(authenticate);
-router.use(isAdmin);
+router.use(hasAdminAccess);
+router.use(requirePermission('categories'));
 router.use(resolveStore);
 
 // Get all categories (with optional tree structure)

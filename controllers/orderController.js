@@ -355,10 +355,10 @@ exports.cancelOrder = async (req, res) => {
   try {
     const { id } = req.params;
     const userId = req.user.id;
-    const isAdmin = req.user.role === 'admin';
+    const hasAdminPanelAccess = req.user.role === 'admin' || req.user.role === 'member';
     const { reason } = req.body;
 
-    const order = await Order.findOne(isAdmin ? { _id: id } : { _id: id, userId });
+    const order = await Order.findOne(hasAdminPanelAccess ? { _id: id } : { _id: id, userId });
     if (!order) {
       return res.status(404).json({
         success: false,
@@ -387,7 +387,7 @@ exports.cancelOrder = async (req, res) => {
     order.status = 'cancelled';
     await order.save();
 
-    logger.info('Order cancelled', { orderId: order._id, userId: isAdmin ? order.userId : userId, byAdmin: isAdmin });
+    logger.info('Order cancelled', { orderId: order._id, userId: hasAdminPanelAccess ? order.userId : userId, byAdmin: hasAdminPanelAccess });
 
     res.status(200).json({
       success: true,

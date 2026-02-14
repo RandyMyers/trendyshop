@@ -8,39 +8,51 @@ const productController = require('../controllers/productController');
 const customerController = require('../controllers/customerController');
 const analyticsController = require('../controllers/analyticsController');
 const storeController = require('../controllers/storeController');
-const { authenticate, isAdmin } = require('../middleware/auth');
+const { authenticate, hasAdminAccess, requireAdmin } = require('../middleware/auth');
+const { requirePermission } = require('../middleware/permissions');
 const { resolveStore } = require('../middleware/resolveStore');
 
 router.use(authenticate);
-router.use(isAdmin);
+router.use(hasAdminAccess);
 router.use(resolveStore);
 
-router.get('/stores', storeController.getStores);
-router.get('/stores/:id', storeController.getStore);
-router.post('/stores', storeController.createStore);
-router.put('/stores/:id', storeController.updateStore);
+// Dashboard & analytics
+router.get('/dashboard/stats', requirePermission('dashboard'), dashboardController.getDashboardStats);
+router.get('/dashboard/trends', requirePermission('dashboard'), dashboardController.getDashboardTrends);
+router.get('/cj/balance', requirePermission('dashboard'), dashboardController.getCjBalance);
+router.get('/analytics/top-products', requirePermission('dashboard'), analyticsController.getTopProducts);
+router.get('/analytics/revenue-by-country', requirePermission('dashboard'), analyticsController.getRevenueByCountry);
+router.get('/analytics/revenue-by-payment-method', requirePermission('dashboard'), analyticsController.getRevenueByPaymentMethod);
+router.get('/analytics/by-store', requirePermission('dashboard'), analyticsController.getAnalyticsByStore);
 
-router.get('/dashboard/stats', dashboardController.getDashboardStats);
-router.get('/dashboard/trends', dashboardController.getDashboardTrends);
-router.get('/cj/balance', dashboardController.getCjBalance);
-router.get('/analytics/top-products', analyticsController.getTopProducts);
-router.get('/analytics/revenue-by-country', analyticsController.getRevenueByCountry);
-router.get('/analytics/revenue-by-payment-method', analyticsController.getRevenueByPaymentMethod);
-router.get('/analytics/by-store', analyticsController.getAnalyticsByStore);
-router.get('/customers', customerController.getCustomers);
-router.get('/customers/ltv-distribution', customerController.getLtvDistribution);
-router.post('/customers/backfill-stats', customerController.backfillCustomerStats);
-router.get('/customers/by-ip/:ip', customerController.getOrdersByIp);
-router.get('/customers/:id/orders', customerController.getCustomerOrders);
-router.get('/customers/:id', customerController.getCustomerDetail);
-router.get('/orders', orderController.getAdminOrders);
-router.get('/orders/:id', orderController.getAdminOrder);
-router.post('/orders/:id/mark-paid', orderController.markOrderAsPaid);
-router.get('/payments', paymentController.getAdminPayments);
-router.get('/users', userController.getAdminUsers);
-router.put('/users/:id', userController.updateUser);
-router.delete('/users/:id', userController.deleteUser);
-router.delete('/stores/:id', storeController.deleteStore);
-router.get('/cj/stock', productController.getCjStock);
+// Stores
+router.get('/stores', requirePermission('stores'), storeController.getStores);
+router.get('/stores/:id', requirePermission('stores'), storeController.getStore);
+router.post('/stores', requirePermission('stores'), storeController.createStore);
+router.put('/stores/:id', requirePermission('stores'), storeController.updateStore);
+router.delete('/stores/:id', requirePermission('stores'), storeController.deleteStore);
+
+// Orders & customers
+router.get('/customers', requirePermission('orders'), customerController.getCustomers);
+router.get('/customers/ltv-distribution', requirePermission('orders'), customerController.getLtvDistribution);
+router.post('/customers/backfill-stats', requirePermission('orders'), customerController.backfillCustomerStats);
+router.get('/customers/by-ip/:ip', requirePermission('orders'), customerController.getOrdersByIp);
+router.get('/customers/:id/orders', requirePermission('orders'), customerController.getCustomerOrders);
+router.get('/customers/:id', requirePermission('orders'), customerController.getCustomerDetail);
+router.get('/orders', requirePermission('orders'), orderController.getAdminOrders);
+router.get('/orders/:id', requirePermission('orders'), orderController.getAdminOrder);
+router.post('/orders/:id/mark-paid', requirePermission('orders'), orderController.markOrderAsPaid);
+
+// Payments
+router.get('/payments', requirePermission('payments'), paymentController.getAdminPayments);
+
+// Users (full admin only)
+router.post('/users/invite', requireAdmin, userController.inviteUser);
+router.get('/users', requireAdmin, userController.getAdminUsers);
+router.put('/users/:id', requireAdmin, userController.updateUser);
+router.delete('/users/:id', requireAdmin, userController.deleteUser);
+
+// Products (CJ stock)
+router.get('/cj/stock', requirePermission('products'), productController.getCjStock);
 
 module.exports = router;
