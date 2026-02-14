@@ -143,3 +143,32 @@ exports.updateStore = async (req, res) => {
     });
   }
 };
+
+/**
+ * Delete store (admin)
+ * DELETE /api/v1/admin/stores/:id
+ */
+exports.deleteStore = async (req, res) => {
+  try {
+    const { id } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ success: false, message: 'Invalid store ID' });
+    }
+    const store = await Store.findById(id);
+    if (!store) {
+      return res.status(404).json({ success: false, message: 'Store not found' });
+    }
+    if (store.slug === 'default') {
+      return res.status(400).json({ success: false, message: 'Cannot delete the default store' });
+    }
+    await Store.findByIdAndDelete(id);
+    res.status(200).json({ success: true, message: 'Store deleted' });
+  } catch (error) {
+    logger.error('Error deleting store', { error: error.message });
+    res.status(500).json({
+      success: false,
+      message: 'Failed to delete store',
+      error: error.message,
+    });
+  }
+};

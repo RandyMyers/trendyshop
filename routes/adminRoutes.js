@@ -38,6 +38,9 @@ router.get('/orders/:id', orderController.getAdminOrder);
 router.post('/orders/:id/mark-paid', orderController.markOrderAsPaid);
 router.get('/payments', paymentController.getAdminPayments);
 router.get('/users', userController.getAdminUsers);
+router.put('/users/:id', userController.updateUser);
+router.delete('/users/:id', userController.deleteUser);
+router.delete('/stores/:id', storeController.deleteStore);
 router.get('/cj/stock', productController.getCjStock);
 
 module.exports = router;
