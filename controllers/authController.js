@@ -61,7 +61,7 @@ exports.register = async (req, res) => {
     logger.error('Error registering user', { error: error.message });
     res.status(500).json({
       success: false,
-      message: 'Failed to register user',
+      message: error?.message || 'Failed to register user',
       error: error.message,
     });
   }
@@ -220,7 +220,7 @@ exports.updateProfile = async (req, res) => {
     logger.error('Error updating user profile', { error: error.message });
     res.status(500).json({
       success: false,
-      message: 'Failed to update profile',
+      message: error?.message || 'Failed to update profile',
       error: error.message,
     });
   }
@@ -279,7 +279,7 @@ exports.changePassword = async (req, res) => {
     logger.error('Error changing password', { error: error.message });
     res.status(500).json({
       success: false,
-      message: 'Failed to change password',
+      message: error?.message || 'Failed to change password',
       error: error.message,
     });
   }

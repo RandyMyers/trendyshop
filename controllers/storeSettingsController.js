@@ -51,7 +51,7 @@ exports.getPublicSettings = async (req, res) => {
   } catch (error) {
     res.status(500).json({
       success: false,
-      message: 'Failed to fetch store settings',
+      message: error?.message || 'Failed to fetch store settings',
       error: error.message,
     });
   }

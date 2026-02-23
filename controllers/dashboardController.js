@@ -19,7 +19,7 @@ exports.getCjBalance = async (req, res) => {
     logger.error('Error getting CJ balance', { error: error.message });
     res.status(500).json({
       success: false,
-      message: error.message || 'Failed to get CJ balance',
+      message: error?.message || 'Failed to get CJ balance',
       error: error.message,
     });
   }
@@ -83,7 +83,7 @@ exports.getDashboardStats = async (req, res) => {
     logger.error('Error getting dashboard stats', { error: error.message });
     res.status(500).json({
       success: false,
-      message: 'Failed to get dashboard stats',
+      message: error?.message || 'Failed to get dashboard stats',
       error: error.message,
     });
   }
@@ -142,7 +142,7 @@ exports.getDashboardTrends = async (req, res) => {
     logger.error('Error getting dashboard trends', { error: error.message });
     res.status(500).json({
       success: false,
-      message: 'Failed to get dashboard trends',
+      message: error?.message || 'Failed to get dashboard trends',
       error: error.message,
     });
   }

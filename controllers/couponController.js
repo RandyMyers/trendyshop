@@ -15,7 +15,7 @@ exports.getAdminCoupons = async (req, res) => {
     logger.error('Error getting coupons', { error: error.message });
     res.status(500).json({
       success: false,
-      message: 'Failed to get coupons',
+      message: error?.message || 'Failed to get coupons',
       error: error.message,
     });
   }
@@ -51,7 +51,7 @@ exports.createCoupon = async (req, res) => {
     logger.error('Error creating coupon', { error: error.message });
     res.status(500).json({
       success: false,
-      message: 'Failed to create coupon',
+      message: error?.message || 'Failed to create coupon',
       error: error.message,
     });
   }
@@ -86,7 +86,7 @@ exports.updateCoupon = async (req, res) => {
     logger.error('Error updating coupon', { error: error.message });
     res.status(500).json({
       success: false,
-      message: 'Failed to update coupon',
+      message: error?.message || 'Failed to update coupon',
       error: error.message,
     });
   }
@@ -107,7 +107,7 @@ exports.deleteCoupon = async (req, res) => {
     logger.error('Error deleting coupon', { error: error.message });
     res.status(500).json({
       success: false,
-      message: 'Failed to delete coupon',
+      message: error?.message || 'Failed to delete coupon',
       error: error.message,
     });
   }
@@ -149,7 +149,7 @@ exports.validateCoupon = async (req, res) => {
     logger.error('Error validating coupon', { error: error.message });
     res.status(500).json({
       success: false,
-      message: 'Failed to validate coupon',
+      message: error?.message || 'Failed to validate coupon',
       error: error.message,
     });
   }

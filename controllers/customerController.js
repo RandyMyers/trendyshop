@@ -103,7 +103,7 @@ exports.getCustomers = async (req, res) => {
     logger.error('Error getting customers', { error: error.message });
     res.status(500).json({
       success: false,
-      message: 'Failed to get customers',
+      message: error?.message || 'Failed to get customers',
       error: error.message,
     });
   }
@@ -167,7 +167,7 @@ exports.getLtvDistribution = async (req, res) => {
     logger.error('Error getting customer LTV distribution', { error: error.message });
     res.status(500).json({
       success: false,
-      message: 'Failed to get customer LTV distribution',
+      message: error?.message || 'Failed to get customer LTV distribution',
       error: error.message,
     });
   }
@@ -251,7 +251,7 @@ exports.getCustomerDetail = async (req, res) => {
     logger.error('Error getting customer detail', { error: error.message });
     res.status(500).json({
       success: false,
-      message: 'Failed to get customer',
+      message: error?.message || 'Failed to get customer',
       error: error.message,
     });
   }
@@ -390,7 +390,7 @@ exports.backfillCustomerStats = async (req, res) => {
     logger.error('Error backfilling customer stats', { error: error.message });
     res.status(500).json({
       success: false,
-      message: 'Failed to backfill customer stats',
+      message: error?.message || 'Failed to backfill customer stats',
       error: error.message,
     });
   }

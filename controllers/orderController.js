@@ -134,7 +134,7 @@ exports.createOrder = async (req, res) => {
     logger.error('Error creating order', { error: error.message });
     res.status(500).json({
       success: false,
-      message: 'Failed to create order',
+      message: error?.message || 'Failed to create order',
       error: error.message,
     });
   }
@@ -180,7 +180,7 @@ exports.getOrders = async (req, res) => {
     logger.error('Error getting orders', { error: error.message });
     res.status(500).json({
       success: false,
-      message: 'Failed to get orders',
+      message: error?.message || 'Failed to get orders',
       error: error.message,
     });
   }
@@ -214,7 +214,7 @@ exports.getOrder = async (req, res) => {
     logger.error('Error getting order', { error: error.message });
     res.status(500).json({
       success: false,
-      message: 'Failed to get order',
+      message: error?.message || 'Failed to get order',
       error: error.message,
     });
   }
@@ -297,7 +297,7 @@ exports.createCjOrder = async (req, res) => {
     logger.error('Error creating CJ order', { error: error.message, orderId: req.params.id });
     res.status(500).json({
       success: false,
-      message: 'Failed to create CJ order',
+      message: error?.message || 'Failed to create CJ order',
       error: error.message,
     });
   }
@@ -341,7 +341,7 @@ exports.syncOrderStatus = async (req, res) => {
     logger.error('Error syncing order status', { error: error.message });
     res.status(500).json({
       success: false,
-      message: 'Failed to sync order status',
+      message: error?.message || 'Failed to sync order status',
       error: error.message,
     });
   }
@@ -398,7 +398,7 @@ exports.cancelOrder = async (req, res) => {
     logger.error('Error cancelling order', { error: error.message });
     res.status(500).json({
       success: false,
-      message: 'Failed to cancel order',
+      message: error?.message || 'Failed to cancel order',
       error: error.message,
     });
   }
@@ -475,7 +475,7 @@ exports.getAdminOrders = async (req, res) => {
     logger.error('Error getting admin orders', { error: error.message });
     res.status(500).json({
       success: false,
-      message: 'Failed to get orders',
+      message: error?.message || 'Failed to get orders',
       error: error.message,
     });
   }
@@ -509,7 +509,7 @@ exports.getAdminOrder = async (req, res) => {
     logger.error('Error getting admin order', { error: error.message });
     res.status(500).json({
       success: false,
-      message: 'Failed to get order',
+      message: error?.message || 'Failed to get order',
       error: error.message,
     });
   }
@@ -554,7 +554,7 @@ exports.markOrderAsPaid = async (req, res) => {
     logger.error('Error marking order as paid', { error: error.message });
     res.status(500).json({
       success: false,
-      message: 'Failed to mark order as paid',
+      message: error?.message || 'Failed to mark order as paid',
       error: error.message,
     });
   }

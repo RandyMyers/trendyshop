@@ -73,7 +73,7 @@ exports.getCategories = async (req, res) => {
     logger.error('Error getting categories', { error: error.message });
     res.status(500).json({
       success: false,
-      message: 'Failed to get categories',
+      message: error?.message || 'Failed to get categories',
       error: error.message,
     });
   }
@@ -102,7 +102,7 @@ exports.getCategory = async (req, res) => {
     logger.error('Error getting category', { error: error.message, categoryId: req.params.id });
     res.status(500).json({
       success: false,
-      message: 'Failed to get category',
+      message: error?.message || 'Failed to get category',
       error: error.message,
     });
   }
@@ -193,7 +193,7 @@ exports.createCategory = async (req, res) => {
         });
         return res.status(500).json({
           success: false,
-          message: 'Failed to upload image',
+          message: uploadError?.message || 'Failed to upload image',
           error: uploadError.message,
         });
       }
@@ -308,7 +308,7 @@ exports.updateCategory = async (req, res) => {
         logger.error('Error uploading category image', { error: uploadError.message, categoryId: id });
         return res.status(500).json({
           success: false,
-          message: 'Failed to upload image',
+          message: uploadError?.message || 'Failed to upload image',
           error: uploadError.message,
         });
       }
@@ -506,7 +506,7 @@ exports.updateCategoryTranslation = async (req, res) => {
     logger.error('Error updating category translation', { error: error.message, categoryId: req.params.id });
     res.status(500).json({
       success: false,
-      message: 'Failed to update category translation',
+      message: error?.message || 'Failed to update category translation',
       error: error.message,
     });
   }
@@ -622,7 +622,7 @@ exports.getPublicCategory = async (req, res) => {
     logger.error('Error getting public category', { error: error.message, categoryId: req.params.id });
     res.status(500).json({
       success: false,
-      message: 'Failed to get category',
+      message: error?.message || 'Failed to get category',
       error: error.message,
     });
   }
@@ -695,7 +695,7 @@ exports.getPublicCategories = async (req, res) => {
     logger.error('Error getting public categories', { error: error.message });
     res.status(500).json({
       success: false,
-      message: 'Failed to get categories',
+      message: error?.message || 'Failed to get categories',
       error: error.message,
     });
   }

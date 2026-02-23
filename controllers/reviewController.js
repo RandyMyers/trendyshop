@@ -66,7 +66,7 @@ exports.createProductReview = async (req, res) => {
     });
   } catch (error) {
     logger.error('Error creating review', { error: error.message });
-    res.status(500).json({ success: false, message: 'Failed to submit review', error: error.message });
+    res.status(500).json({ success: false, message: error?.message || 'Failed to submit review', error: error.message });
   }
 };
 
@@ -84,7 +84,7 @@ exports.getAdminReviews = async (req, res) => {
     res.status(200).json({ success: true, data: reviews });
   } catch (error) {
     logger.error('Error getting reviews', { error: error.message });
-    res.status(500).json({ success: false, message: 'Failed to get reviews', error: error.message });
+    res.status(500).json({ success: false, message: error?.message || 'Failed to get reviews', error: error.message });
   }
 };
 
@@ -108,6 +108,6 @@ exports.updateReviewStatus = async (req, res) => {
     res.status(200).json({ success: true, data: review });
   } catch (error) {
     logger.error('Error updating review', { error: error.message });
-    res.status(500).json({ success: false, message: 'Failed to update review', error: error.message });
+    res.status(500).json({ success: false, message: error?.message || 'Failed to update review', error: error.message });
   }
 };

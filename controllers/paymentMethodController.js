@@ -19,7 +19,7 @@ exports.getActivePaymentMethods = async (req, res) => {
     logger.error('Error getting active payment methods', { error: error.message });
     res.status(500).json({
       success: false,
-      message: 'Failed to get payment methods',
+      message: error?.message || 'Failed to get payment methods',
       error: error.message,
     });
   }
@@ -124,7 +124,7 @@ exports.createOrUpdatePaymentMethod = async (req, res) => {
 
     res.status(500).json({
       success: false,
-      message: 'Failed to save payment method',
+      message: error?.message || 'Failed to save payment method',
       error: error.message,
     });
   }
@@ -155,7 +155,7 @@ exports.getPaymentMethods = async (req, res) => {
     logger.error('Error getting payment methods', { error: error.message });
     res.status(500).json({
       success: false,
-      message: 'Failed to get payment methods',
+      message: error?.message || 'Failed to get payment methods',
       error: error.message,
     });
   }
@@ -230,7 +230,7 @@ exports.deletePaymentMethod = async (req, res) => {
     logger.error('Error deleting payment method', { error: error.message });
     res.status(500).json({
       success: false,
-      message: 'Failed to delete payment method',
+      message: error?.message || 'Failed to delete payment method',
       error: error.message,
     });
   }
@@ -269,7 +269,7 @@ exports.toggleActive = async (req, res) => {
     logger.error('Error toggling payment method active status', { error: error.message });
     res.status(500).json({
       success: false,
-      message: 'Failed to toggle payment method status',
+      message: error?.message || 'Failed to toggle payment method status',
       error: error.message,
     });
   }

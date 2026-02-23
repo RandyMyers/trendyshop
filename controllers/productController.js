@@ -354,7 +354,7 @@ exports.getProducts = async (req, res) => {
     logger.error('Error getting products', { error: error.message });
     res.status(500).json({
       success: false,
-      message: 'Failed to get products',
+      message: error?.message || 'Failed to get products',
       error: error.message,
     });
   }
@@ -459,7 +459,7 @@ exports.getFilterOptions = async (req, res) => {
     logger.error('Error getting filter options', { error: error.message });
     res.status(500).json({
       success: false,
-      message: 'Failed to get filter options',
+      message: error?.message || 'Failed to get filter options',
       error: error.message,
     });
   }
@@ -760,7 +760,7 @@ exports.getProduct = async (req, res) => {
     logger.error('Error getting product', { error: error.message, productId: req.params.id });
     res.status(500).json({
       success: false,
-      message: 'Failed to get product',
+      message: error?.message || 'Failed to get product',
       error: error.message,
     });
   }
@@ -811,7 +811,7 @@ exports.getProductBySlug = async (req, res) => {
     logger.error('Error getting product by slug', { error: error.message, slug: req.params?.slug });
     res.status(500).json({
       success: false,
-      message: 'Failed to get product',
+      message: error?.message || 'Failed to get product',
       error: error.message,
     });
   }
@@ -833,7 +833,7 @@ exports.getCategories = async (req, res) => {
     logger.error('Error getting categories', { error: error.message });
     res.status(500).json({
       success: false,
-      message: 'Failed to get categories',
+      message: error?.message || 'Failed to get categories',
       error: error.message,
     });
   }
@@ -882,7 +882,7 @@ exports.getFreightOptions = async (req, res) => {
     logger.error('Error getting freight options', { error: error.message });
     res.status(500).json({
       success: false,
-      message: 'Failed to get freight options',
+      message: error?.message || 'Failed to get freight options',
       error: error.message,
     });
   }
@@ -952,7 +952,7 @@ exports.browseCJCatalog = async (req, res) => {
 
     res.status(500).json({
       success: false,
-      message: 'Failed to browse CJ catalog',
+      message: error?.message || 'Failed to browse CJ catalog',
       error: error.message,
     });
   }
@@ -1012,7 +1012,7 @@ exports.getCJProductDetails = async (req, res) => {
 
     res.status(500).json({
       success: false,
-      message: 'Failed to get product details',
+      message: error?.message || 'Failed to get product details',
       error: error.message,
     });
   }
@@ -1457,7 +1457,7 @@ exports.addProductFromCJ = async (req, res) => {
     });
     res.status(500).json({
       success: false,
-      message: 'Failed to add product to store',
+      message: error?.message || 'Failed to add product to store',
       error: error.message,
     });
   }
@@ -1502,7 +1502,7 @@ exports.updateProductPrice = async (req, res) => {
     logger.error('Error updating product price', { error: error.message });
     res.status(500).json({
       success: false,
-      message: 'Failed to update product price',
+      message: error?.message || 'Failed to update product price',
       error: error.message,
     });
   }
@@ -1542,7 +1542,7 @@ exports.syncProduct = async (req, res) => {
     logger.error('Error syncing product', { error: error.message });
     res.status(500).json({
       success: false,
-      message: 'Failed to sync product',
+      message: error?.message || 'Failed to sync product',
       error: error.message,
     });
   }
@@ -1582,7 +1582,7 @@ exports.updateProduct = async (req, res) => {
     logger.error('Error updating product', { error: error.message });
     res.status(500).json({
       success: false,
-      message: 'Failed to update product',
+      message: error?.message || 'Failed to update product',
       error: error.message,
     });
   }
@@ -1667,7 +1667,8 @@ exports.updateProductTranslation = async (req, res) => {
     logger.error('Error updating product translation', { error: error.message, productId: req.params.id });
     res.status(500).json({
       success: false,
-      message: 'Failed to update product translation',
+      message: error?.message || 'Failed to update product translation',
+      error: error.message,
     });
   }
 };
@@ -1689,7 +1690,7 @@ exports.deleteProduct = async (req, res) => {
     logger.error('Error deleting product', { error: error.message });
     res.status(500).json({
       success: false,
-      message: 'Failed to delete product',
+      message: error?.message || 'Failed to delete product',
       error: error.message,
     });
   }
@@ -1722,7 +1723,7 @@ exports.getCjStock = async (req, res) => {
     logger.error('Error getting CJ stock', { error: error.message });
     res.status(500).json({
       success: false,
-      message: error.message || 'Failed to get CJ stock',
+      message: error?.message || 'Failed to get CJ stock',
       error: error.message,
     });
   }

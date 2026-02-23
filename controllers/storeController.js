@@ -29,7 +29,7 @@ exports.getStores = async (req, res) => {
     logger.error('Error getting stores', { error: error.message });
     res.status(500).json({
       success: false,
-      message: 'Failed to get stores',
+      message: error?.message || 'Failed to get stores',
       error: error.message,
     });
   }
@@ -54,7 +54,7 @@ exports.getStore = async (req, res) => {
     logger.error('Error getting store', { error: error.message });
     res.status(500).json({
       success: false,
-      message: 'Failed to get store',
+      message: error?.message || 'Failed to get store',
       error: error.message,
     });
   }
@@ -167,7 +167,7 @@ exports.deleteStore = async (req, res) => {
     logger.error('Error deleting store', { error: error.message });
     res.status(500).json({
       success: false,
-      message: 'Failed to delete store',
+      message: error?.message || 'Failed to delete store',
       error: error.message,
     });
   }

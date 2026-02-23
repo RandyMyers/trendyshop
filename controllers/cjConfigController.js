@@ -47,7 +47,7 @@ exports.getTokenStatus = async (req, res) => {
     logger.error('Error getting CJ token status', { error: error.message });
     res.status(500).json({
       success: false,
-      message: 'Failed to get token status',
+      message: error?.message || 'Failed to get token status',
       error: error.message,
     });
   }
@@ -78,7 +78,7 @@ exports.getConfig = async (req, res) => {
     logger.error('Error getting CJ config', { error: error.message });
     res.status(500).json({
       success: false,
-      message: 'Failed to get configuration',
+      message: error?.message || 'Failed to get configuration',
       error: error.message,
     });
   }
@@ -158,7 +158,7 @@ exports.updateApiKey = async (req, res) => {
     logger.error('Error updating CJ API key', { error: error.message });
     res.status(500).json({
       success: false,
-      message: 'Failed to update API key',
+      message: error?.message || 'Failed to update API key',
       error: error.message,
     });
   }
@@ -206,7 +206,7 @@ exports.refreshToken = async (req, res) => {
     logger.error('Error refreshing CJ token', { error: error.message });
     res.status(500).json({
       success: false,
-      message: 'Failed to refresh token',
+      message: error?.message || 'Failed to refresh token',
       error: error.message,
     });
   }
@@ -273,8 +273,8 @@ exports.testConnection = async (req, res) => {
 
       res.status(500).json({
         success: false,
-        message: 'Failed to connect to CJ Dropshipping API',
-        error: tokenError.message || 'Unable to authenticate with CJ API. Please verify your API key is correct.',
+message: tokenError?.message || 'Failed to connect to CJ Dropshipping API',
+      error: tokenError?.message,
       });
     }
   } catch (error) {
@@ -284,7 +284,7 @@ exports.testConnection = async (req, res) => {
     });
     res.status(500).json({
       success: false,
-      message: 'Connection test failed',
+      message: error?.message || 'Connection test failed',
       error: error.message,
     });
   }
@@ -311,7 +311,7 @@ exports.deleteToken = async (req, res) => {
     logger.error('Error deleting CJ token', { error: error.message });
     res.status(500).json({
       success: false,
-      message: 'Failed to delete token',
+      message: error?.message || 'Failed to delete token',
       error: error.message,
     });
   }
@@ -332,7 +332,7 @@ exports.getWebhookConfig = async (req, res) => {
     logger.error('Error getting CJ webhook config', { error: error.message });
     res.status(500).json({
       success: false,
-      message: 'Failed to get webhook configuration',
+      message: error?.message || 'Failed to get webhook configuration',
       error: error.message,
     });
   }
@@ -414,7 +414,7 @@ exports.setWebhookConfig = async (req, res) => {
     logger.error('Error setting CJ webhook config', { error: error.message });
     res.status(500).json({
       success: false,
-      message: 'Failed to set webhook configuration',
+      message: error?.message || 'Failed to set webhook configuration',
       error: error.message,
     });
   }
@@ -435,7 +435,7 @@ exports.getWarehouses = async (req, res) => {
     logger.error('Error getting CJ warehouses', { error: error.message });
     res.status(500).json({
       success: false,
-      message: error.message || 'Failed to get warehouse list',
+      message: error?.message || 'Failed to get warehouse list',
       error: error.message,
     });
   }
@@ -453,7 +453,7 @@ exports.getWarehouseDetail = async (req, res) => {
   } catch (error) {
     res.status(500).json({
       success: false,
-      message: 'Failed to fetch CJ warehouse detail',
+      message: error?.message || 'Failed to fetch CJ warehouse detail',
       error: error.message,
     });
   }

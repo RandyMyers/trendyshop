@@ -111,7 +111,7 @@ exports.initializeFlutterwavePayment = async (req, res) => {
     logger.error('Error initializing Flutterwave payment', { error: error.message, stack: error.stack });
     res.status(500).json({
       success: false,
-      message: 'Failed to initialize payment',
+      message: error?.message || 'Failed to initialize payment',
       error: error.message,
     });
   }
@@ -187,7 +187,7 @@ exports.verifyFlutterwavePayment = async (req, res) => {
     logger.error('Error verifying Flutterwave payment', { error: error.message, stack: error.stack });
     res.status(500).json({
       success: false,
-      message: 'Failed to verify payment',
+      message: error?.message || 'Failed to verify payment',
       error: error.message,
     });
   }
@@ -258,7 +258,7 @@ exports.flutterwaveCallback = async (req, res) => {
     logger.error('Error processing Flutterwave callback', { error: error.message, stack: error.stack });
     res.status(500).json({
       success: false,
-      message: 'Failed to process callback',
+      message: error?.message || 'Failed to process callback',
       error: error.message,
     });
   }
@@ -292,7 +292,7 @@ exports.getPayment = async (req, res) => {
     logger.error('Error getting payment', { error: error.message });
     res.status(500).json({
       success: false,
-      message: 'Failed to get payment',
+      message: error?.message || 'Failed to get payment',
       error: error.message,
     });
   }
@@ -332,7 +332,7 @@ exports.getPayments = async (req, res) => {
     logger.error('Error getting payments', { error: error.message });
     res.status(500).json({
       success: false,
-      message: 'Failed to get payments',
+      message: error?.message || 'Failed to get payments',
       error: error.message,
     });
   }
@@ -378,7 +378,7 @@ exports.getAdminPayments = async (req, res) => {
     logger.error('Error getting admin payments', { error: error.message });
     res.status(500).json({
       success: false,
-      message: 'Failed to get payments',
+      message: error?.message || 'Failed to get payments',
       error: error.message,
     });
   }
@@ -468,7 +468,7 @@ exports.initializeSquadPayment = async (req, res) => {
     logger.error('Error initializing Squad payment', { error: error.message });
     res.status(500).json({
       success: false,
-      message: 'Failed to initialize payment',
+      message: error?.message || 'Failed to initialize payment',
       error: error.message,
     });
   }
@@ -534,7 +534,7 @@ exports.verifySquadPayment = async (req, res) => {
     logger.error('Error verifying Squad payment', { error: error.message });
     res.status(500).json({
       success: false,
-      message: 'Failed to verify payment',
+      message: error?.message || 'Failed to verify payment',
       error: error.message,
     });
   }
@@ -610,7 +610,7 @@ exports.getBankTransferDetails = async (req, res) => {
     logger.error('Error getting bank transfer details', { error: error.message });
     res.status(500).json({
       success: false,
-      message: 'Failed to get bank transfer details',
+      message: error?.message || 'Failed to get bank transfer details',
       error: error.message,
     });
   }
@@ -695,7 +695,7 @@ exports.uploadBankTransferReceipt = async (req, res) => {
     logger.error('Error uploading bank transfer receipt', { error: error.message, stack: error.stack });
     res.status(500).json({
       success: false,
-      message: 'Failed to upload receipt',
+      message: error?.message || 'Failed to upload receipt',
       error: error.message,
     });
   }

@@ -23,7 +23,7 @@ exports.getOrderDisputes = async (req, res) => {
     res.status(200).json({ success: true, data: disputes });
   } catch (error) {
     logger.error('Error getting order disputes', { error: error.message });
-    res.status(500).json({ success: false, message: 'Failed to get disputes' });
+    res.status(500).json({ success: false, message: error?.message || 'Failed to get disputes', error: error?.message });
   }
 };
 
@@ -61,7 +61,7 @@ exports.createOrderDispute = async (req, res) => {
     });
   } catch (error) {
     logger.error('Error creating dispute', { error: error.message });
-    res.status(500).json({ success: false, message: 'Failed to create dispute' });
+    res.status(500).json({ success: false, message: error?.message || 'Failed to create dispute', error: error?.message });
   }
 };
 
@@ -78,7 +78,7 @@ exports.getAdminDisputes = async (req, res) => {
     res.status(200).json({ success: true, data: disputes });
   } catch (error) {
     logger.error('Error getting disputes', { error: error.message });
-    res.status(500).json({ success: false, message: 'Failed to get disputes' });
+    res.status(500).json({ success: false, message: error?.message || 'Failed to get disputes', error: error?.message });
   }
 };
 
@@ -98,6 +98,6 @@ exports.createDispute = async (req, res) => {
     res.status(201).json({ success: true, data: dispute });
   } catch (error) {
     logger.error('Error creating dispute', { error: error.message });
-    res.status(500).json({ success: false, message: 'Failed to create dispute' });
+    res.status(500).json({ success: false, message: error?.message || 'Failed to create dispute', error: error?.message });
   }
 };

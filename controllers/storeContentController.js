@@ -50,7 +50,8 @@ exports.getAllContent = async (req, res) => {
   } catch (error) {
     res.status(500).json({
       success: false,
-      message: error.message || 'Failed to fetch store content',
+      message: error?.message || 'Failed to fetch store content',
+      error: error?.message,
     });
   }
 };
@@ -102,7 +103,8 @@ exports.updateContent = async (req, res) => {
   } catch (error) {
     res.status(500).json({
       success: false,
-      message: error.message || 'Failed to update content',
+      message: error?.message || 'Failed to update content',
+      error: error?.message,
     });
   }
 };
@@ -158,7 +160,8 @@ exports.updateTranslation = async (req, res) => {
   } catch (error) {
     res.status(500).json({
       success: false,
-      message: error.message || 'Failed to update translation',
+      message: error?.message || 'Failed to update translation',
+      error: error?.message,
     });
   }
 };
@@ -229,7 +232,8 @@ exports.getPublicContent = async (req, res) => {
   } catch (error) {
     res.status(500).json({
       success: false,
-      message: error.message || 'Failed to fetch content',
+      message: error?.message || 'Failed to fetch content',
+      error: error?.message,
     });
   }
 };

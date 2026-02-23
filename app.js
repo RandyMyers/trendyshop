@@ -250,7 +250,7 @@ app.use((err, req, res, next) => {
   });
 
   res.status(status).json({
-    error: status >= 500 ? 'Internal Server Error' : (err.name || 'Error'),
+    error: status >= 500 ? errorMessage : (err.name || 'Error'),
     message: errorMessage,
     ...(process.env.NODE_ENV !== 'production' && err.stack && { stack: err.stack }),
     timestamp: new Date().toISOString(),

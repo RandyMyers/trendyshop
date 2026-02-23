@@ -24,7 +24,7 @@ exports.getAdminFaqs = async (req, res) => {
     logger.error('Error getting FAQs', { error: error.message });
     res.status(500).json({
       success: false,
-      message: 'Failed to get FAQs',
+      message: error?.message || 'Failed to get FAQs',
       error: error.message,
     });
   }
@@ -63,7 +63,7 @@ exports.createFaq = async (req, res) => {
     logger.error('Error creating FAQ', { error: error.message });
     res.status(500).json({
       success: false,
-      message: 'Failed to create FAQ',
+      message: error?.message || 'Failed to create FAQ',
       error: error.message,
     });
   }
@@ -104,7 +104,7 @@ exports.updateFaq = async (req, res) => {
     logger.error('Error updating FAQ', { error: error.message });
     res.status(500).json({
       success: false,
-      message: 'Failed to update FAQ',
+      message: error?.message || 'Failed to update FAQ',
       error: error.message,
     });
   }
@@ -135,7 +135,7 @@ exports.deleteFaq = async (req, res) => {
     logger.error('Error deleting FAQ', { error: error.message });
     res.status(500).json({
       success: false,
-      message: 'Failed to delete FAQ',
+      message: error?.message || 'Failed to delete FAQ',
       error: error.message,
     });
   }
@@ -162,7 +162,7 @@ exports.getPublicFaqs = async (req, res) => {
     logger.error('Error getting public FAQs', { error: error.message });
     res.status(500).json({
       success: false,
-      message: 'Failed to get FAQs',
+      message: error?.message || 'Failed to get FAQs',
       error: error.message,
     });
   }

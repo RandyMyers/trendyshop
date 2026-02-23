@@ -56,7 +56,7 @@ exports.getTopProducts = async (req, res) => {
     logger.error('Error getting top products', { error: error.message });
     res.status(500).json({
       success: false,
-      message: 'Failed to get top products',
+      message: error?.message || 'Failed to get top products',
       error: error.message,
     });
   }
@@ -211,7 +211,7 @@ exports.getAnalyticsByStore = async (req, res) => {
     logger.error('Error getting analytics by store', { error: error.message });
     res.status(500).json({
       success: false,
-      message: 'Failed to get analytics by store',
+      message: error?.message || 'Failed to get analytics by store',
       error: error.message,
     });
   }

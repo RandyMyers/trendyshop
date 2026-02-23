@@ -25,7 +25,8 @@ exports.authenticate = async (req, res, next) => {
       logger.error('JWT_SECRET is not configured');
       return res.status(500).json({
         success: false,
-        message: 'Server configuration error',
+        message: 'JWT_SECRET is not configured',
+        error: 'JWT_SECRET is not configured',
       });
     }
 
@@ -70,7 +71,8 @@ exports.authenticate = async (req, res, next) => {
 
     res.status(500).json({
       success: false,
-      message: 'Authentication failed',
+      message: error?.message || 'Authentication failed',
+      error: error?.message,
     });
   }
 };

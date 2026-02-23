@@ -50,7 +50,7 @@ exports.getAdminPosts = async (req, res) => {
     res.status(200).json({ success: true, data: posts });
   } catch (error) {
     logger.error('Error getting blog posts', { error: error.message });
-    res.status(500).json({ success: false, message: 'Failed to get blog posts' });
+    res.status(500).json({ success: false, message: error?.message || 'Failed to get blog posts', error: error?.message });
   }
 };
 
@@ -70,7 +70,7 @@ exports.getAdminPostById = async (req, res) => {
     res.status(200).json({ success: true, data: post });
   } catch (error) {
     logger.error('Error getting blog post', { error: error.message, postId: req.params.id });
-    res.status(500).json({ success: false, message: 'Failed to get blog post' });
+    res.status(500).json({ success: false, message: error?.message || 'Failed to get blog post', error: error?.message });
   }
 };
 
@@ -163,7 +163,7 @@ exports.updatePost = async (req, res) => {
     res.status(200).json({ success: true, data: post });
   } catch (error) {
     logger.error('Error updating blog post', { error: error.message, postId: req.params.id });
-    res.status(500).json({ success: false, message: 'Failed to update blog post' });
+    res.status(500).json({ success: false, message: error?.message || 'Failed to update blog post', error: error?.message });
   }
 };
 
@@ -269,7 +269,8 @@ exports.updatePostTranslation = async (req, res) => {
     logger.error('Error updating blog post translation', { error: error.message, postId: req.params.id });
     res.status(500).json({
       success: false,
-      message: 'Failed to update blog post translation',
+      message: error?.message || 'Failed to update blog post translation',
+      error: error?.message,
     });
   }
 };
@@ -294,7 +295,7 @@ exports.getPublicPosts = async (req, res) => {
     res.status(200).json({ success: true, data: localizedPosts });
   } catch (error) {
     logger.error('Error getting blog posts', { error: error.message });
-    res.status(500).json({ success: false, message: 'Failed to get blog posts' });
+    res.status(500).json({ success: false, message: error?.message || 'Failed to get blog posts', error: error?.message });
   }
 };
 
@@ -343,6 +344,6 @@ exports.getPublicPostBySlug = async (req, res) => {
     res.status(200).json({ success: true, data: localizedPost });
   } catch (error) {
     logger.error('Error getting blog post', { error: error.message });
-    res.status(500).json({ success: false, message: 'Failed to get blog post' });
+    res.status(500).json({ success: false, message: error?.message || 'Failed to get blog post', error: error?.message });
   }
 };

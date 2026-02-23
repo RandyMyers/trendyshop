@@ -41,7 +41,7 @@ exports.getAdminUsers = async (req, res) => {
     logger.error('Error getting admin users', { error: error.message });
     res.status(500).json({
       success: false,
-      message: 'Failed to get users',
+      message: error?.message || 'Failed to get users',
       error: error.message,
     });
   }
@@ -86,7 +86,7 @@ exports.updateUser = async (req, res) => {
     logger.error('Error updating user', { error: error.message });
     res.status(500).json({
       success: false,
-      message: 'Failed to update user',
+      message: error?.message || 'Failed to update user',
       error: error.message,
     });
   }
@@ -159,7 +159,7 @@ exports.inviteUser = async (req, res) => {
     logger.error('Error inviting user', { error: error.message });
     res.status(500).json({
       success: false,
-      message: 'Failed to invite user',
+      message: error?.message || 'Failed to invite user',
       error: error.message,
     });
   }
@@ -188,7 +188,7 @@ exports.deleteUser = async (req, res) => {
     logger.error('Error deleting user', { error: error.message });
     res.status(500).json({
       success: false,
-      message: 'Failed to delete user',
+      message: error?.message || 'Failed to delete user',
       error: error.message,
     });
   }
